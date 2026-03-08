@@ -1,0 +1,176 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Route Draft</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=60">
+
+    <style>
+        /* ===== PROFILE SECTION ===== */
+        .profile-section{
+            text-align:center;
+            padding:25px 0;
+            border-bottom:1px solid rgba(255,255,255,0.1);
+        }
+
+        .profile-pic{
+            width:80px;
+            height:80px;
+            border-radius:50%;
+            object-fit:cover;
+            border:3px solid white;
+            box-shadow:0 4px 15px rgba(0,0,0,0.4);
+            margin-bottom:10px;
+        }
+
+        .profile-name{
+            font-size:15px;
+            font-weight:500;
+            color:white;
+        }
+
+        .menu-links a{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:white;
+font-weight:500;
+}
+
+.menu-links a i{
+color:#00f2ff;
+font-size:16px;
+}
+    </style>
+</head>
+
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<div class="navbar">
+
+    <div class="nav-left">
+        {% if user.is_authenticated %}
+        <div class="toggle-btn" onclick="toggleSidebar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        {% endif %}
+        <div class="logo">🌍 Route Draft</div>
+    </div>
+
+    <div class="nav-right">
+        {% if user.is_authenticated %}
+            <span class="welcome-text">Hi, {{ user.first_name }}</span>
+            <a href="/accounts/logout/" class="logout-btn">Logout</a>
+        {% else %}
+            <a href="/accounts/login/" class="login-btn">Login</a>
+            <a href="/accounts/signup/" class="signup-btn">Sign Up</a>
+        {% endif %}
+    </div>
+
+</div>
+
+<!-- ================= SIDEBAR ================= -->
+{% if user.is_authenticated %}
+<div id="sidebar" class="sidebar">
+
+    <!-- PROFILE SECTION -->
+    <div class="profile-section">
+        {% if user.socialaccount_set.all.0.extra_data.picture %}
+            <img src="{{ user.socialaccount_set.all.0.extra_data.picture }}" class="profile-pic">
+        {% endif %}
+        <div class="profile-name">
+            {{ user.first_name }} {{ user.last_name }}
+        </div>
+    </div>
+
+    <!-- MENU LINKS -->
+    <div class="menu-links">
+
+<a href="/">
+<i class="fa-solid fa-house"></i> Home
+</a>
+
+<a href="/plan/">
+<i class="fa-solid fa-route"></i> Plan Trip
+</a>
+
+<a href="/trip-preview/">
+<i class="fa-solid fa-image"></i> Destination Preview
+</a>
+
+<a href="{% url 'guide' %}">
+<i class="fa-solid fa-book-open"></i> Travel Guide
+</a>
+
+<a href="/cost/">
+<i class="fa-solid fa-coins"></i> Cost Estimate
+</a>
+
+<a href="/bookings/">
+<i class="fa-solid fa-book"></i> Bookings
+</a>
+
+<a href="{% url 'map' %}">
+<i class="fa-solid fa-map-location-dot"></i> View Maps
+</a>
+
+<a href="{% url 'my_trips' %}">
+<i class="fa-solid fa-suitcase"></i> My Trips
+</a>
+
+</div>
+
+</div>
+{% endif %}
+
+<!-- ================= CONTENT ================= -->
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+<script>
+
+const sidebar = document.getElementById("sidebar");
+const toggle = document.querySelector(".toggle-btn");
+
+function toggleSidebar(){
+    sidebar.classList.toggle("active");
+}
+
+/* close sidebar when clicking outside */
+
+document.addEventListener("click", function(event){
+
+    if(
+        sidebar.classList.contains("active") &&
+        !sidebar.contains(event.target) &&
+        !toggle.contains(event.target)
+    ){
+        sidebar.classList.remove("active");
+    }
+
+});
+
+</script>
+
+
+<footer class="footer">
+    <p>
+        © 2026 <span>Route Draft</span> — Draft Your Own Routes |
+        Contact: <a href="mailto:routedraft01@gmail.com">routedraft01@gmail.com</a>
+    </p>
+</footer>
+</body>
+</html>

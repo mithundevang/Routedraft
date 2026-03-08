@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+.booking-container{
+max-width:1200px;
+margin:auto;
+padding-top:40px;
+}
+
+.booking-title{
+text-align:center;
+margin-bottom:40px;
+}
+
+.booking-title h2{
+font-size:32px;
+color:#00f2ff;
+}
+
+.booking-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.booking-card{
+overflow:hidden;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+transition:0.3s;
+background:white;
+text-align:center;
+padding:30px;
+}
+
+.booking-card:hover{
+transform:scale(1.05);
+}
+
+.booking-card i{
+font-size:55px;
+color:#00c6ff;
+margin-bottom:15px;
+}
+
+.booking-card a{
+text-decoration:none;
+font-weight:bold;
+font-size:16px;
+color:#333;
+}
+
+.booking-card a:hover{
+color:#00c6ff;
+}
+
+.visit-btn{
+display:block;
+margin:40px auto;
+padding:15px 40px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#00f2ff,#4facfe);
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+text-decoration:none;
+width:200px;
+text-align:center;
+}
+
+.visit-btn:hover{
+box-shadow:0 10px 25px rgba(0,242,255,0.5);
+}
+
+</style>
+
+<div class="booking-container">
+
+<div class="booking-title">
+<h2>Book Your Travel</h2>
+<p>Reserve buses, trains, flights and hotels for your trip</p>
+</div>
+
+<div class="booking-grid">
+
+<!-- Bus -->
+<div class="booking-card">
+<i class="fas fa-bus"></i>
+<p>Bus Booking</p>
+<a href="https://www.redbus.in" target="_blank">RedBus</a>
+</div>
+
+<!-- Train -->
+<div class="booking-card">
+<i class="fas fa-train"></i>
+<p>Train Booking</p>
+<a href="https://www.irctc.co.in" target="_blank">IRCTC</a>
+</div>
+
+<!-- Flight -->
+<div class="booking-card">
+<i class="fas fa-plane"></i>
+<p>Flight Booking</p>
+<a href="https://www.skyscanner.com" target="_blank">Skyscanner</a>
+</div>
+
+<!-- Hotel -->
+<div class="booking-card">
+<i class="fas fa-hotel"></i>
+<p>Hotel Booking</p>
+<a href="https://www.booking.com" target="_blank">Booking.com</a>
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

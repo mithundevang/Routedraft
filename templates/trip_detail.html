@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard">
+    
+    <aside class="sidebar">
+        <h2>{{ trip.destination }}</h2>
+        <p>{{ trip.days }} Days Trip</p>
+        <p>Budget: ${{ trip.budget }}</p>
+
+        <a href="/trip/{{ trip.id }}/hotels/" class="sidebar-btn">View Hotels</a>
+        <a href="{% url 'map' %}" class="sidebar-btn">View Map</a>
+       <a href="{% url 'map' %}" class="sidebar-btn">Cost Estimate</a>
+    </aside>
+
+    <main class="content">
+        <h1>Your AI Itinerary</h1>
+
+        {% for day in days %}
+        <div class="itinerary-card">
+            <h3>Day {{ day.day_number }}</h3>
+            <pre>{{ day.content }}</pre>
+        </div>
+        {% endfor %}
+    </main>
+
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+

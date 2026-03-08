@@ -1,0 +1,384 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+body{
+    background:linear-gradient(120deg,#1a1a2e,#16213e,#0f3460);
+    color:white;
+}
+
+/* MAIN CONTAINER */
+
+.guide-container{
+    max-width:1200px;
+    margin:40px auto;
+    font-family:'Poppins',sans-serif;
+}
+
+/* GLASS CARD STYLE */
+
+.card{
+    background:rgba(0,0,0,0.7);
+    backdrop-filter:blur(25px);
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 15px 50px rgba(0,0,0,0.6);
+    margin-bottom:25px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+/* TITLES */
+
+.section-title{
+    margin-bottom:15px;
+    color:#00f2ff;
+}
+
+/* HEADER */
+
+.city-header{
+    text-align:center;
+}
+
+.score{
+    font-size:26px;
+    font-weight:bold;
+    color:#00f2ff;
+}
+
+/* WEATHER */
+
+.weather-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+}
+
+.weather-icon{
+    width:90px;
+}
+
+/* GRID */
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+/* LISTS */
+
+ul{
+    padding-left:20px;
+}
+
+ul li{
+    margin-bottom:6px;
+}
+
+/* FORECAST GRID */
+
+.forecast-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:18px;
+}
+
+.forecast-day{
+    background:rgba(255,255,255,0.05);
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.forecast-day:hover{
+    background:rgba(255,255,255,0.12);
+}
+
+.forecast-day img{
+    width:55px;
+}
+
+/* SMALL INFO BOX */
+
+.info-box{
+    margin-top:8px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.grid-2{
+grid-template-columns:1fr;
+}
+
+.weather-header{
+flex-direction:column;
+align-items:flex-start;
+gap:20px;
+}
+
+}
+
+/* MAP BUTTONS */
+
+.map-controls{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+margin-bottom:20px;
+justify-content:center;
+}
+
+.map-btn{
+background: linear-gradient(135deg,#4facfe,#00f2fe);
+border:none;
+color:white;
+padding:10px 18px;
+border-radius:30px;
+font-size:14px;
+font-weight:600;
+cursor:pointer;
+transition: all 0.3s ease;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+text-decoration:none;
+}
+
+.map-btn:hover{
+transform: translateY(-2px);
+box-shadow:0 8px 20px rgba(0,0,0,0.25);
+background: linear-gradient(135deg,#43e97b,#38f9d7);
+}
+
+</style>
+
+<div class="guide-container">
+
+{% if not city %}
+
+<!-- NO TRIP MESSAGE -->
+
+<div class="card city-header" style="padding:60px">
+
+<h2>No Trip Planned</h2>
+
+<p>Please plan a trip first to view the smart travel guide.</p>
+
+<a href="{% url 'plan_trip' %}" class="map-btn" style="margin-top:20px;display:inline-block;">
+Plan a Trip
+</a>
+
+</div>
+
+{% elif error %}
+
+<div class="card">
+<h3>{{ error }}</h3>
+</div>
+
+{% else %}
+
+<!-- 🌍 CITY HEADER -->
+
+<div class="card city-header">
+
+<h2>{{ city }}, {{ country }}</h2>
+
+<p>{{ summary }}</p>
+
+<div class="score">
+Travel Comfort Score : {{ travel_score }}/10
+</div>
+
+</div>
+
+<!-- 🌦 CURRENT WEATHER -->
+
+<div class="card">
+
+<div class="weather-header">
+
+<div>
+
+<h3 class="section-title">Current Weather</h3>
+
+<div class="info-box"><strong>Temperature:</strong> {{ temperature }}°C</div>
+<div class="info-box"><strong>Condition:</strong> {{ condition }}</div>
+<div class="info-box"><strong>Feels Like:</strong> {{ feels_like }}°C</div>
+<div class="info-box"><strong>Humidity:</strong> {{ humidity }}%</div>
+<div class="info-box"><strong>Wind Speed:</strong> {{ wind_kph }} km/h</div>
+<div class="info-box"><strong>Local Time:</strong> {{ local_time }}</div>
+
+</div>
+
+<div>
+<img src="https:{{ icon }}" class="weather-icon">
+</div>
+
+</div>
+
+</div>
+
+<!-- 🌤 4 DAY FORECAST -->
+
+<div class="card">
+
+<h3 class="section-title">4 Day Weather Forecast</h3>
+
+<div class="forecast-grid">
+
+{% for day in forecast %}
+
+<div class="forecast-day">
+
+<p><strong>{{ day.date }}</strong></p>
+
+<img src="https:{{ day.icon }}">
+
+<p>{{ day.condition }}</p>
+
+<p>{{ day.temp }}°C</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+<!-- 🧠 SMART TRAVEL ADVICE -->
+
+<div class="card grid-2">
+
+<div>
+
+<h3 class="section-title">Weather Advice</h3>
+<p>{{ weather_advice }}</p>
+
+<h3 class="section-title">Dressing Tip</h3>
+<p>{{ dressing_tip }}</p>
+
+<h3 class="section-title">Best Time Suggestion</h3>
+<p>{{ season_tip }}</p>
+
+</div>
+
+<div>
+
+<h3 class="section-title">Budget Tip</h3>
+<p>{{ budget_tip }}</p>
+
+<h3 class="section-title">Accommodation</h3>
+<p>{{ accommodation_tip }}</p>
+
+</div>
+
+</div>
+
+<!-- 🚦 TRANSPORT -->
+
+<div class="card">
+
+<h3 class="section-title">Transport Guide</h3>
+
+<ul>
+{% for item in transport_guide %}
+<li>{{ item }}</li>
+{% endfor %}
+</ul>
+
+</div>
+
+<!-- 🍽 FOOD -->
+
+<div class="card">
+
+<h3 class="section-title">Food Recommendations</h3>
+
+<ul>
+{% for food in best_foods %}
+<li>{{ food }}</li>
+{% endfor %}
+</ul>
+
+</div>
+
+<!-- 🎒 PACKING -->
+
+<div class="card">
+
+<h3 class="section-title">Packing Checklist</h3>
+
+<ul>
+{% for item in packing_list %}
+<li>{{ item }}</li>
+{% endfor %}
+</ul>
+
+</div>
+
+<!-- 🛡 SAFETY -->
+
+<div class="card">
+
+<h3 class="section-title">Safety & Information</h3>
+
+<p><strong>Safety Level:</strong> {{ safety_index }}</p>
+<p><strong>Emergency Numbers:</strong> {{ emergency_numbers }}</p>
+<p><strong>Currency Info:</strong> {{ currency_info }}</p>
+
+</div>
+
+<!-- 🗺 SMART LOCATION MAP -->
+
+<div class="map-controls">
+
+<button class="map-btn" onclick="loadMap('')">🏙 City</button>
+<button class="map-btn" onclick="loadMap('hospital near')">🏥 Hospitals</button>
+<button class="map-btn" onclick="loadMap('fuel station near')">⛽ Fuel</button>
+<button class="map-btn" onclick="loadMap('atm near')">🏧 ATM</button>
+<button class="map-btn" onclick="loadMap('restaurant near')">🍽 Restaurants</button>
+<button class="map-btn" onclick="loadMap('hotel near')">🏨 Hotels</button>
+
+</div>
+
+<iframe
+id="cityMap"
+width="100%"
+height="450"
+style="border-radius:12px;border:0"
+loading="lazy"
+allowfullscreen
+src="https://www.google.com/maps?q={{ city }}&output=embed">
+</iframe>
+
+{% endif %}
+
+</div>
+
+<script>
+
+function loadMap(type){
+
+let city = "{{ city }}";
+
+let query = type + " " + city;
+
+let mapURL = "https://www.google.com/maps?q=" + encodeURIComponent(query) + "&output=embed";
+
+document.getElementById("cityMap").src = mapURL;
+
+}
+
+</script>
+
+{% endblock %}

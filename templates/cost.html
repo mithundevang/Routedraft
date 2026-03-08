@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+/* MAIN CONTAINER */
+
+.preview-container{
+max-width:1200px;
+margin:auto;
+padding-top:100px;
+text-align:center;
+}
+
+/* TITLE */
+
+.preview-title{
+margin-bottom:40px;
+}
+
+.preview-title h2{
+font-size:32px;
+color:#00f2ff;
+}
+
+.preview-title p{
+color:#ddd;
+}
+
+/* COST GRID */
+
+.cost-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+margin-top:40px;
+}
+
+/* COST CARDS */
+
+.cost-card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+border-radius:20px;
+padding:30px;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+transition:0.3s;
+}
+
+.cost-card:hover{
+transform:scale(1.05);
+}
+
+.cost-card h3{
+color:#00f2ff;
+margin-bottom:10px;
+}
+
+.cost-card p{
+font-size:22px;
+font-weight:bold;
+}
+
+/* TOTAL BUDGET */
+
+.total-budget{
+margin-top:40px;
+font-size:26px;
+color:#00f2ff;
+}
+
+/* PIE CHART */
+
+.pie-chart{
+width:220px;
+height:220px;
+border-radius:50%;
+margin:40px auto;
+box-shadow:0 20px 50px rgba(0,0,0,0.5);
+}
+
+/* NO TRIP SECTION */
+
+.no-trip{
+margin-top:120px;
+text-align:center;
+}
+
+.no-trip h2{
+font-size:32px;
+color:#00f2ff;
+margin-bottom:10px;
+}
+
+.no-trip p{
+font-size:16px;
+color:#ddd;
+margin-bottom:25px;
+}
+
+/* BUTTON */
+
+.btn-primary{
+display:inline-block;
+padding:15px 40px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#00f2ff,#4facfe);
+color:white;
+font-weight:bold;
+text-decoration:none;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn-primary:hover{
+box-shadow:0 10px 25px rgba(0,242,255,0.5);
+}
+
+</style>
+
+<div class="preview-container">
+
+{% if trip %}
+
+<div class="preview-title">
+
+<h2>{{ trip.destination }} Cost Estimation</h2>
+<p>Explore your trip budget before finalizing your plan</p>
+
+</div>
+
+<div class="cost-container">
+
+<div class="cost-card">
+<h3>Hotel</h3>
+<p>${{ hotel_cost }}</p>
+</div>
+
+<div class="cost-card">
+<h3>Food</h3>
+<p>${{ food_cost }}</p>
+</div>
+
+<div class="cost-card">
+<h3>Attractions</h3>
+<p>${{ attraction_cost }}</p>
+</div>
+
+<div class="cost-card">
+<h3>Travel</h3>
+<p>${{ travel_cost }}</p>
+</div>
+
+</div>
+
+<h2 class="total-budget">
+Total Estimated Budget: ${{ total }}
+</h2>
+
+<div class="pie-chart"
+style="background: conic-gradient(
+#4CAF50 0% {{ hotel_percent }}%,
+#2196F3 {{ hotel_percent }}% {{ hotel_percent|add:food_percent }}%,
+#FF9800 {{ hotel_percent|add:food_percent }}% {{ hotel_percent|add:food_percent|add:attraction_percent }}%,
+#E91E63 {{ hotel_percent|add:food_percent|add:attraction_percent }}% 100%
+);">
+</div>
+
+{% else %}
+
+<div class="no-trip">
+
+<h2>No Trip Planned Yet</h2>
+
+<p>Please plan a trip first to see the cost estimation.</p>
+
+<a href="/plan/" class="btn-primary">
+Plan a Trip
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

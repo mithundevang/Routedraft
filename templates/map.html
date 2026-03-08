@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.map-container{
+    padding-top:100px;
+    padding-left:150px;
+    padding-right:40px;
+    padding-bottom:40px;
+}
+
+.map-card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.5);
+}
+
+.map-title{
+    font-size:22px;
+    margin-bottom:15px;
+    font-weight:600;
+}
+
+#map{
+    height:600px;
+    border-radius:15px;
+}
+</style>
+
+
+
+<div class="map-container">
+
+<div class="map-card">
+
+<div class="map-title">
+🗺 Route Map – {{ destination }}
+{% if explorer_mode %}
+<div style="text-align:center;color:#ddd;font-size:18px;margin-bottom:15px;">
+Please plan your trip in AI Trip Planner to see routes and attractions.
+</div>
+{% endif %}
+
+
+
+<div id="map"></div>
+
+</div>
+
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+var places = JSON.parse('{{ places|escapejs }}');
+var route = JSON.parse('{{ route|escapejs }}');
+
+var map = L.map('map').setView([20.5937,78.9629],5);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap contributors'
+}).addTo(map);
+
+var markers=[];
+
+/* Add default blue markers */
+
+places.forEach(function(place){
+
+var marker = L.marker([place.lat, place.lng])
+.addTo(map)
+.bindPopup("<b>"+place.name+"</b>");
+
+markers.push(marker);
+
+});
+
+/* Draw route */
+
+if(route.length > 0){
+
+var latlngs = route.map(function(coord){
+return [coord[1], coord[0]];
+});
+
+var polyline = L.polyline(latlngs,{
+color:"#00f2ff",
+weight:5,
+opacity:0.9
+}).addTo(map);
+
+map.fitBounds(polyline.getBounds());
+
+}
+
+else if(markers.length > 0){
+
+var group = new L.featureGroup(markers);
+map.fitBounds(group.getBounds());
+
+}
+
+else{
+
+map.setView([20.5937,78.9629],5);
+}
+</script>
+
+
+{% endblock %}

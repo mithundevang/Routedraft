@@ -1,0 +1,114 @@
+{% load socialaccount %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up - TripAI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body{
+            margin:0;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-family:'Segoe UI',sans-serif;
+            background:url("https://images.unsplash.com/photo-1502920917128-1aa500764cbd")
+            no-repeat center center/cover;
+        }
+
+        body::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.65);
+            z-index:-1;
+        }
+
+        .signup-card{
+            background:rgba(0,0,0,0.85);
+            backdrop-filter:blur(20px);
+            padding:40px;
+            border-radius:18px;
+            width:360px;
+            text-align:center;
+            color:white;
+            box-shadow:0 10px 40px rgba(0,0,0,0.6);
+            animation:fadeIn 0.6s ease;
+        }
+
+        .signup-card h2{
+            margin-bottom:25px;
+            font-weight:600;
+        }
+
+        .google-btn{
+            display:block;
+            width:100%;
+            padding:12px;
+            background:white;
+            border-radius:12px;
+            font-weight:bold;
+            text-decoration:none;
+            color:black;
+            transition:0.3s;
+        }
+
+        .google-btn i{
+            margin-right:8px;
+            color:#DB4437;
+        }
+
+        .google-btn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 6px 20px rgba(255,255,255,0.2);
+        }
+
+        .login-link{
+            margin-top:18px;
+            font-size:14px;
+        }
+
+        .login-link a{
+            color:#00f2ff;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        .login-link a:hover{
+            text-decoration:underline;
+        }
+
+        @keyframes fadeIn{
+            from{opacity:0; transform:translateY(20px);}
+            to{opacity:1; transform:translateY(0);}
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="signup-card">
+
+    <h2>Create Account</h2>
+
+    <!-- Direct Google Signup -->
+    <a href="{% url 'socialaccount_login' 'google' %}">
+    Continue with Google
+</a>
+
+    <div class="login-link">
+        Already have an account?
+        <!-- Direct Google Login -->
+        <a href="{% provider_login_url 'google' process='login' %}">
+            Login
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

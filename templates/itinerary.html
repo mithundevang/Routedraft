@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style="padding-top:100px; text-align:center; color:white;">
+
+    <h1>Your AI Itinerary for {{ destination }}</h1>
+    <p>Budget: ${{ budget }} | Days: {{ days }}</p>
+
+    {% for day, places in itinerary.items %}
+        <h2 style="margin-top:40px;">Day {{ day }}</h2>
+
+        {% if places %}
+            <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px;">
+                {% for place in places %}
+                    <div style="width:300px; background:rgba(255,255,255,0.1); padding:20px; border-radius:15px;">
+
+                        {% if place.image %}
+                            <img src="{{ place.image }}" style="width:100%; height:200px; object-fit:cover; border-radius:10px;">
+                        {% endif %}
+
+                        <h3>{{ place.name }}</h3>
+                        <p><strong>{{ place.category }}</strong></p>
+                        <p>{{ place.description }}</p>
+
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No places found for this day.</p>
+        {% endif %}
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
