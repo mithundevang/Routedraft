@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["routedraft.onrender.com"]]
 
 ROOT_URLCONF = "tripplanner.urls"
 
@@ -103,5 +103,6 @@ TEMPLATES = [{
         "django.contrib.messages.context_processors.messages",
     ]},
 }]
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
