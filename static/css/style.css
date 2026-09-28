@@ -300,3 +300,116 @@ body{
 .footer a:hover{
     text-decoration:underline;
 }
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (max-width: 768px){
+
+    .navbar{
+        padding:0 20px;
+        height:60px;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    .toggle-btn{
+        width:26px;
+        height:20px;
+        margin-right:12px;
+    }
+
+    .nav-right{
+        gap:5px;
+    }
+
+    .welcome-text{
+        display:none;
+    }
+
+    .login-btn,
+    .signup-btn,
+    .logout-btn{
+        padding:7px 12px;
+        margin-left:5px;
+        font-size:12px;
+    }
+
+    .sidebar{
+        top:60px;
+        height:calc(100vh - 60px);
+        width:240px;
+    }
+
+    .content{
+        padding-top:80px;
+        padding-left:20px;
+        padding-right:20px;
+        padding-bottom:70px;
+    }
+
+    .hero{
+        min-height:75vh;
+        padding:20px;
+    }
+
+    .btn-primary{
+        padding:13px 28px;
+        font-size:14px;
+    }
+
+    .footer{
+        padding:7px 5px;
+        font-size:11px;
+    }
+}
+
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width: 480px){
+
+    .navbar{
+        padding:0 12px;
+    }
+
+    .logo{
+        font-size:16px;
+    }
+
+    .toggle-btn{
+        width:24px;
+        height:18px;
+        margin-right:8px;
+    }
+
+    .login-btn,
+    .signup-btn,
+    .logout-btn{
+        padding:6px 9px;
+        font-size:11px;
+    }
+
+    .sidebar{
+        width:220px;
+    }
+
+    .content{
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .hero{
+        padding:15px;
+    }
+
+    .btn-primary{
+        padding:12px 24px;
+        font-size:13px;
+    }
+
+    .footer{
+        font-size:10px;
+    }
+}
