@@ -366,7 +366,7 @@ body{
 }
 
 
-/* ================= SMALL MOBILE ================= */
+
 
 @media (max-width: 480px){
 
@@ -412,4 +412,16 @@ body{
     .footer{
         font-size:10px;
     }
+}
+
+
+@media (max-width: 768px){
+
+    .home-page{
+        background-size:100% auto;
+        background-position:top center;
+        background-repeat:no-repeat;
+        background-attachment:scroll;
+    }
+
 }
